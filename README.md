@@ -24,12 +24,12 @@ Create a simple loop to wait for a job to appear in the queue:
 while True:
 	# sleep a second before querying for a new job
 	time.sleep(1)
-	job = queue.get()
+	# lock_timeout is in milliseconds the amount of time after which lock
+	#  automatically expires and the job is considered available for other
+	#  consumers as well. Default is shown below.
+	job = queue.get(lock_timeout=1000)
 	if job:
-		# lock_timeout is in milliseconds the amount of time after which lock
-		#  automatically expires and the job is considered available for other
-		#  consumers as well. Default is shown below.
-		job_payload = job.get(lock_timeout=1000)
+		job_payload = job.get()
 		print job_payload
 		# release lock and remove data from queue
 		job.complete()
