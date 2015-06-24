@@ -1,5 +1,7 @@
 # python-redisjobqueue
-Non-blocking job queue in Redis backend with distributed locking mechanism to prevent double work if multiple processes or threads are simultaneously dividing work load through one queue.
+Non-blocking job queue for Redis backend with distributed locking mechanism to allow safely multiple processes or threads asynchronously get jobs to process.
+
+This software was originally written at [Eniram ltd](http://www.eniram.fi) in summer of 2015 and open sourced in the hope that it will benefit others as well.
 
 ## How-To use
 
