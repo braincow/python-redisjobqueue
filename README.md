@@ -53,5 +53,6 @@ Push new jobs to the queue:
 for i in range(10):
 	# here we push a simple string to the queue but almost any datastructure is
 	#  acceptable as long as it json serializable
-	queue.put("Hello world %i!" % i)
+	job_payload = "Hello world %i!" % i
+	queue.put(job_payload)
 ```
