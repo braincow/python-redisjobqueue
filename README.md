@@ -1,5 +1,5 @@
 # python-redisjobqueue
-Non-blocking job queue for Redis backend with distributed locking mechanism to allow safely multiple processes or threads asynchronously get jobs to process.
+Non-blocking job queue for Redis backend with distributed locking mechanism to allow safely multiple processes or threads asynchronously get jobs to process. Only one unique job (message) is allowed in the queue at a time and adding another with identical content raises exception.
 
 This software was originally written at [Eniram ltd](http://www.eniram.fi) in summer of 2015 and open sourced in the hope that it will benefit others as well.
 
@@ -53,8 +53,11 @@ queue = RedisJobQueue("my-queue", "redis-host", 6379)
 Push new jobs to the queue:
 ```python
 for i in range(10):
+	# we create a string variable with for loop counter value added to it.
+	#  this makes every job (message) unique as only one unique job is allowed
+	#  in the queue at a time
+	job_payload = "Hello world %i!" % i
 	# here we push a simple string to the queue but almost any datastructure is
 	#  acceptable as long as it json serializable
-	job_payload = "Hello world %i!" % i
 	queue.put(job_payload)
 ```
