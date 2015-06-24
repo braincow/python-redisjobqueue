@@ -32,7 +32,7 @@ while True:
 		job_payload = job.get(lock_timeout=1000)
 		print job_payload
 		# release lock and remove data from queue
-		job.completed()
+		job.complete()
 ```
 
 ### Queue publisher -- add work to queue
