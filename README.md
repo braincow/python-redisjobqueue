@@ -51,7 +51,7 @@ queue = RedisJobQueue("my-queue", "redis-host", 6379)
 Push new jobs to the queue:
 ```python
 for i in range(10):
-	# here we push a simple string to the queue but almost any datastructure is acceptable
-	#  as long as it json serializable
+	# here we push a simple string to the queue but almost any datastructure is
+	#  acceptable as long as it json serializable
 	queue.put("Hello world %i!" % i)
 ```
