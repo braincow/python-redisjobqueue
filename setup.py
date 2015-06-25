@@ -10,5 +10,5 @@ setup(
 	author='Antti Peltonen',
 	author_email='antti.peltonen@iki.fi',
 	url='https://github.com/braincow/python-redisjobqueue',
-	install_requires=['redis', 'redlock']
+	install_requires=['redis', 'redlock-py']
 	)

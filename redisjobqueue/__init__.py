@@ -63,16 +63,14 @@ class RedisJobQueueItem(object):
 			self.queue.dlm.unlock(self.lock)
 
 class RedisJobQueue(object):
-	def __init__(self, name, redis_host="localhost", redis_port=6379, namespace="queue"):
+	def __init__(self, queue_name="jobs", redis_host="localhost", redis_port=6379, redis_db=0, queue_namespace="queue"):
 		"""Simple message queue with Redis backend and distributed locking"""
 		# construct queue namespace
-		self.key = "%s:%s" % (namespace, name)
-		# @FIXME: this is ugly, make this whole constructor play nice with Redis and Redlock to provide
-		#  access to clusters etc.
-		conn_params = [{"host": redis_host, "port": redis_port, "db": 0}, ]
+		self.key = "%s:%s" % (queue_namespace, queue_name)
 		# try to open redis connection to host
-		self.redis = redis.Redis(redis_host, redis_port)
-		# also open a lock redis connection to host
+		self.redis = redis.Redis(host=redis_host, port=redis_port, db=redis_db)
+		# also open a lock redis connection to host, ugh its ugly. Is there a better way to do this?
+		conn_params = [{"host": redis_host, "port": redis_port, "db": redis_db}, ]
 		self.dlm = redlock.Redlock(conn_params)
 
 	def size(self):

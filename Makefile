@@ -1,5 +1,3 @@
-all: build instal
-
 build:
 	python setup.py build
 
