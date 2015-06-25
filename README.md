@@ -18,7 +18,8 @@ Initialize queue and connection to Redis server:
 ```python
 # redis server hostname and port number are optional arguments
 #  and defaults are show below
-queue = RedisJobQueue("my-queue", "redis-host", 6379)
+queue = RedisJobQueue(queue_name="my-queue", redis_host="redis-host",
+	redis_port=6379, redis_db=1)
 ```
 
 Create a simple loop to wait for a job to appear in the queue:
@@ -48,7 +49,8 @@ Initialize queue and connection to Redis server:
 ```python
 # redis server hostname and port number are optional arguments
 #  and defaults are show below
-queue = RedisJobQueue("my-queue", "redis-host", 6379)
+queue = RedisJobQueue(queue_name="my-queue", redis_host="redis-host",
+	redis_port=6379, redis_db=1)
 ```
 Push new jobs to the queue:
 ```python
