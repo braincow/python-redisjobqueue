@@ -48,15 +48,9 @@ class RedisJobQueueItem(object):
 		"""Delete job from queue and release the lock"""
 		if self._isvalid():
 			# delete item from queue
-			try:
-				self.queue.rem(self.data)
-			except JobNotValidException, e:
-				# for some reason the job we represent is no longer found from Redis queue
-				#  but because we are anyway deleting it we can ignore this situation
-				pass
-			finally:
-				# release lock after removal or failure
-				self.queue.dlm.unlock(self.lock)
+			self.queue.rem(self.data)
+			# release lock after removal or failure
+			self.queue.dlm.unlock(self.lock)
 			# mark job as invalid
 			self.valid = False
 
