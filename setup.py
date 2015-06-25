@@ -8,5 +8,6 @@ setup(name='redisjobqueue',
 	author='Antti Peltonen',
 	author_email='antti.peltonen@iki.fi',
 	url='https://github.com/braincow/python-redisjobqueue',
-	packages=['redisjobqueue']
+	packages=['redisjobqueue'],
+	install_requires=['redis', 'redlock'],
 	)
