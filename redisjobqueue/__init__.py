@@ -78,6 +78,13 @@ class RedisJobQueue(object):
 		"""Return the approximate size of the queue."""
 		return self.redis.zcard(self.key)
 
+	def isempty(self):
+		"""Returns True if the queue currently contains no jobs"""
+		if self.size() > 0:
+			return False
+		else:
+			return True
+
 	def put(self, item):
 		"""Put item into the queue."""
 		# use current seconds from epoc moment as a score for Redis ZADD to accomplished sorted fifo queue
