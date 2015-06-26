@@ -3,6 +3,7 @@ import redlock
 import time
 import datetime
 import json
+import time
 
 class JobLockHasExpiredException(Exception):
 	"""This Exception is raised when access or modify is attempted on a job that had its lock expire"""
@@ -91,6 +92,15 @@ class RedisJobQueue(object):
 			if my_lock:
 				# exit here because we found and locked a job
 				return RedisJobQueueItem(json.loads(item), my_lock, self)
+
+	def wait(self, interval = 0.1, lock_timeout = 1000):
+		"""Block and wait for a job to appear in the queue and return it when found"""
+		while True:
+			time.sleep(interval)
+			# query on each loop our own get method to check if there is a job available and lock it
+			job = self.get(lock_timeout = lock_timeout)
+			if job:
+				return job
 
 	def rem(self, item):
 		"""Remove item from job queue"""
