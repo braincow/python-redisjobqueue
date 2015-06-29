@@ -10,8 +10,6 @@ This software was originally written at [Eniram ltd](http://www.eniram.fi) in su
 Import the library to your project:
 ```python
 from redisjobqueue import RedisJobQueue
-# we also require time functions in this example later on
-import time
 ```
 
 Initialize queue and connection to Redis server:
@@ -25,12 +23,16 @@ queue = RedisJobQueue(queue_name="my-queue", redis_host="redis-host",
 Create a simple loop to wait for a job to appear in the queue:
 ```python
 while True:
-	# sleep a second before querying for a new job
-	time.sleep(1)
 	# lock_timeout is in milliseconds the amount of time after which lock
 	#  automatically expires and the job is considered available for other
 	#  consumers as well. Default is shown below.
-	job = queue.get(lock_timeout=1000)
+	# interval is the time between loops inside wait() function when it waits
+	#  for new jobs to appear to queue before returning them. Default is shown
+	#  below.
+	job = queue.wait(interval=0.1, lock_timeout=1000)
+	# to use the Non-blocking way of reading a job from the queue use .get()
+	#  function that returns None if no jobs were available in the queue.
+	# job = queue.get(lock_timeout=1000)
 	if job:
 		job_payload = job.get()
 		print job_payload
